@@ -128,16 +128,16 @@ class HBNBCommand(cmd.Cmd):
                 key, data = line[i].split('=')
                 if (data.startswith('"')):
                     data = data[1:-1].replace('_', ' ')
-                    # new_instance.__dict__.update({key: data.strip('"')})
+                    new_instance.__dict__.update({key: data.strip('"')})
                 elif ('.' in data):
                     data = float(data)
-                    # new_instance.__dict__.update({key: data})
+                    new_instance.__dict__.update({key: data})
                 else:
                     data = int(data)
-                    # new_instance.__dict__.update({key: data})
+                    new_instance.__dict__.update({key: data})
             # new_instance.__dict__.update({key: data})
-            setattr(new_instance, key, data)
-        # storage.new(new_instance)
+            # setattr(new_instance, key, data)
+        storage.new(new_instance)
         storage.save()
         print(new_instance.id)
 
