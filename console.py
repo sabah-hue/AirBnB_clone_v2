@@ -128,17 +128,16 @@ class HBNBCommand(cmd.Cmd):
                 key, data = line[i].split('=')
                 if (data.startswith('"')):
                     data = data[1:-1].replace('_', ' ').strip('"')
-                    new_instance.__dict__.update({key: data})
+                    # new_instance.__dict__.update({key: data})
                 elif ('.' in data):
                     data = float(data)
-                    new_instance.__dict__.update({key: data})
+                    # new_instance.__dict__.update({key: data})
                 else:
                     data = int(data)
-                    new_instance.__dict__.update({key: data})
-                # setattr(new_instance, key, data) 
-        storage.new(new_instance)
-        storage.save()
+                    # new_instance.__dict__.update({key: data})
+                setattr(new_instance, key, data) 
         print(new_instance.id)
+        new_instance.save()
 
     def help_create(self):
         """ Help information for the create method """
