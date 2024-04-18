@@ -124,20 +124,23 @@ class HBNBCommand(cmd.Cmd):
             return
         new_instance = HBNBCommand.classes[line[0]]()
         for i in range(1, len(line)):
-            if (line[i].count("=") == 1):
-                key, data = line[i].split('=')
-                if (data.startswith('"')):
-                    data = data[1:-1].replace('_', ' ')
-                    new_instance.__dict__.update({key: data.strip('"')})
-                elif ('.' in data):
-                    data = float(data)
-                    new_instance.__dict__.update({key: data})
-                else:
-                    data = int(data)
-                    new_instance.__dict__.update({key: data})
+            try:
+                if (line[i].count("=") == 1):
+                    key, data = line[i].split('=')
+                    if (data.startswith('"')):
+                        data = data[1:-1].replace('_', ' ').strip('"')
+                        # new_instance.__dict__.update({key: data.strip('"')})
+                    elif ('.' in data):
+                        data = float(data)
+                        # new_instance.__dict__.update({key: data})
+                    else:
+                        data = int(data)
+                        # new_instance.__dict__.update({key: data})
+                setattr(new_instance, key, data)
+            except Exception:
+                pass 
             # new_instance.__dict__.update({key: data})
             # setattr(new_instance, key, data)
-        storage.new(new_instance)
         storage.save()
         print(new_instance.id)
 
@@ -221,11 +224,13 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
+            # replace _FileStorage__objects to all()
+            for k, v in storage.all().items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
+                # replace _FileStorage__objects to all()
                 print_list.append(str(v))
 
         print(print_list)
