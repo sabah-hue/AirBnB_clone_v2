@@ -9,10 +9,11 @@ from models.city import City
 from models.user import User
 from models.place import Place
 from models.review import Review
+from models.amenity import Amenity
 from sqlalchemy.orm import sessionmaker, scoped_session
 
 classes = {'State': State, 'City': City, 'User': User,
-           'Place': Place, 'Review': Review}
+           'Place': Place, 'Review': Review, 'Amenity': Amenity}
 
 
 class DBStorage:
