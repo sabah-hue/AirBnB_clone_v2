@@ -36,7 +36,7 @@ file { '/data/web_static/current':
 
 exec { 'install_nginx':
     command  => 'sudo chown -R ubuntu:ubuntu /data/;
-    sudo sed -i "50i\\\n\tlocation /hbnb_static {\n\t\talias /data/web_static/current;\n\t}" /etc/nginx/sites-enabled/default;
+    sed -i "50 i \\n\tlocation /hbnb_static {\n\t\talias /data/web_static/current;\n\t}" /etc/nginx/sites-enabled/default;
     sudo service nginx restart',
     provider => shell,
 }
