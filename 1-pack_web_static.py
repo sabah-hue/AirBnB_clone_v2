@@ -9,11 +9,11 @@ from datetime import datetime
 
 def do_pack():
     """ generates a .tgz archive """
-    d_form = datetime.now().strftime("%Y%m%d%H%M%S")
     with Connection(host="100.25.41.212", user="ubuntu",
                     connect_kwargs={
                         "key_filename": "/root/.ssh/id_rsa"}) as c:
         c.local('mkdir -p versions')
+        d_form = datetime.now().strftime("%Y%m%d%H%M%S")
         x = c.local(f"tar -czvf versions/web_static_{d_form}.tgz web_static/")
         return x
 
