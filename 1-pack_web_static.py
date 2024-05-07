@@ -21,6 +21,7 @@ def do_pack():
     with Connection(host="100.25.41.212", user="ubuntu",
                     connect_kwargs={
                         "key_filename": "/root/.ssh/id_rsa"}) as c:
+                        """ connect to host"""
         c.local('mkdir -p versions')
         d_form = datetime.now().strftime("%Y%m%d%H%M%S")
         x = c.local(f"tar -czvf versions/web_static_{d_form}.tgz web_static/")
