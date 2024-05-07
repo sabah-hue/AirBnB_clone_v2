@@ -2,6 +2,7 @@
 """
 generates a .tgz archive from the contents of the web_static
 """
+
 from fabric import Connection
 from datetime import datetime
 
@@ -18,6 +19,3 @@ def do_pack():
             x = c.local("tar -czvf versions/web_static_{}.tgz web_static/"
                         .format(d_form))
             return x
-
-if __name__ == "__main__":
-    do_pack()
