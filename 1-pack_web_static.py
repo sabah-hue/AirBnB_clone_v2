@@ -3,8 +3,9 @@
 generates a .tgz archive from the contents of the web_static
 """
 
-from fabric import Connection
+from fabric.operations import local
 from datetime import datetime
+import os
 
 
 def do_pack():
@@ -18,16 +19,12 @@ def do_pack():
     Returns:
         The result of the tar command execution.
     """
-    with Connection(host="100.25.41.212", user="ubuntu",
-                    connect_kwargs={
-                        "key_filename": "/root/.ssh/id_rsa"}) as c:
-        """ connect to host"""
-        c.local('mkdir -p versions')
-        d_form = datetime.now().strftime("%Y%m%d%H%M%S")
-        x = c.local(f"tar -czvf versions/web_static_{d_form}.tgz web_static/")
+    local('mkdir -p versions')
+    d_form = datetime.now().strftime("%Y%m%d%H%M%S")
+    x = local(f"tar -czvf versions/web_static_{d_form}.tgz web_static/")
+    if x.failed:
+        return None
+    else:
         return x
-
-
-if __name__ == "__main__":
-    """run in terminal"""
-    do_pack()
+        d_size = os.path.getsize(x)
+        print(f"web_static packed: {x} -> {d_size}Bytes")
