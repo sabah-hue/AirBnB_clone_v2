@@ -8,7 +8,16 @@ from datetime import datetime
 
 
 def do_pack():
-    """ generates a .tgz archive """
+    """
+    Generates a .tgz archive from the contents of the web_static directory.
+
+    This function creates a .tgz archive of the web_static directory,
+    naming it with the current date and time.
+    The archive is saved in the 'versions' directory on the local machine.
+
+    Returns:
+        The result of the tar command execution.
+    """
     with Connection(host="100.25.41.212", user="ubuntu",
                     connect_kwargs={
                         "key_filename": "/root/.ssh/id_rsa"}) as c:
