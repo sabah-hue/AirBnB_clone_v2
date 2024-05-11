@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 """distributes an archive to your web servers, using the function do_deploy"""
+
 from fabric.connection import Connection
 from fabric.api import put, run, env
 from os import path
-
 env.user = "ubuntu"
-env.my_ssh_private_key = "/root/.ssh/id_rsa"
+env.my_ssh_private_key = "~/.ssh/id_rsa"
 env.hosts = ["100.25.41.212", "100.25.103.239"]
 
 
