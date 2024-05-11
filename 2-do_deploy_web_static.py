@@ -22,5 +22,6 @@ def do_deploy(archive_path):
     run(f"sudo mv {release}/{n_folder}/web_static/* {release}/{n_folder}/")
     run(f"sudo rm -rf {release}/{n_folder}/web_static")
     run("sudo rm -rf /data/web_static/current")
-    run(f"ln -s {release}/{n_folder}/ /data/web_static/current")
+    run(f"sudo ln -s {release}/{n_folder}/ /data/web_static/current")
+    run("sudo service nginx restart")
     print("New version deployed!")
