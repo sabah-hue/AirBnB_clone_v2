@@ -47,6 +47,17 @@ def display_html_page(n):
     return render_template('5-number.html', number=n)
 
 
+@app.route('/number_odd_or_even/<int:n>')
+def display_number_type(n):
+    """Display number inside html page"""
+    if n % 2:
+        number_type = 'odd'
+    else:
+        number_type = 'even'
+    return render_template('6-number_odd_or_even.html', number=n,
+                           number_type=number_type)
+
+
 if __name__ == '__main__':
     """run in cmd"""
     app.run(host='0.0.0.0', port=5000)
