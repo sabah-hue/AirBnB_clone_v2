@@ -19,7 +19,8 @@ def teardown_app(exception=None):
 def display_states():
     """Display states inside html page"""
     states = storage.all('State')
-    return render_template('7-states_list.html', states=states)
+    return f"{states}"
+    # return render_template('7-states_list.html', states=states.values())
 
 
 if __name__ == '__main__':
