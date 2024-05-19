@@ -12,15 +12,15 @@ app.url_map.strict_slashes = False
 @app.teardown_appcontext
 def teardown_app(exception=None):
     """ remove session """
-    storage.close()
+    if storage is not None:
+        storage.close()
 
 
 @app.route('/states_list')
 def display_states():
     """Display states inside html page"""
-    states = storage.all('State')
-    return f"{states}"
-    # return render_template('7-states_list.html', states=states.values())
+    states = storage.all('State').values()
+    return render_template('7-states_list.html', states=states)
 
 
 if __name__ == '__main__':
