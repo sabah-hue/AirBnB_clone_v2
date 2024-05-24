@@ -20,10 +20,9 @@ def teardown_app(exception=None):
 def display_states():
     """Display states inside html page"""
     states = storage.all('State').values()
-    cities = storage.all('City').values()
-    return render_template('7-states_list.html', states=states, cities=cities)
+    return render_template('8-cities_by_states.html', states=states)
 
 
 if __name__ == '__main__':
     """run in cmd"""
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=True)
