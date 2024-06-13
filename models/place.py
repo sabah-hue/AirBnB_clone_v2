@@ -2,24 +2,28 @@
 """ Place Module for HBNB project """
 import models
 from models.base_model import BaseModel, Base
-from sqlalchemy import String, Column, Integer, Float, ForeignKey, Table
+from sqlalchemy import String, Column, Integer, Float, ForeignKey, Table, DateTime
 from models.amenity import Amenity
 from sqlalchemy.orm import relationship
+from datetime import datetime
 
 
 place_amenity = Table('place_amenity', Base.metadata,
                       Column('place_id', String(60),
                              ForeignKey('places.id', ondelete='CASCADE'),
-                             primary_key=True, nullable=False),
+                             onupdate='CASCADE', primary_key=True),
                       Column('amenity_id', String(60),
                              ForeignKey('amenities.id', ondelete='CASCADE'),
-                             primary_key=True, nullable=False)
+                             onupdate='CASCADE', primary_key=True)
                       )
 
 
 class Place(BaseModel, Base):
     """ A place to stay """
     __tablename__ = 'places'
+    id = Column(String(60), nullable=False, primary_key=True)
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
+    updated_at = Column(DateTime, nullable=False, default=datetime.utcnow())
     city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
     user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
     name = Column(String(128), nullable=False)
@@ -37,6 +41,12 @@ class Place(BaseModel, Base):
                              secondary=place_amenity,
                              viewonly=False,
                              passive_deletes=True)
+
+
+    def __init__(self, *args, **kwargs):
+        """initializes Place"""
+        super().__init__(*args, **kwargs)
+
     @property
     def reviews(self):
         """FileStorage relationship between State and City"""
@@ -51,12 +61,11 @@ class Place(BaseModel, Base):
     def amenities(self):
         """Getter attribute amenities"""
         list_amenty = []
-        for key, value in models.storage.all(Amenity).items():
-            if value.id in self.amenity_ids:
-                list_amenty.append(value)
+        for amenity in models.storage.all(Amenity).values():
+            # if amenity.place_id == self.id:
+                list_amenty.append(amenity)
         return list_amenty
-        # return [amenity for amenity in models.storage.all(Amenity).values()
-        #         if amenity.place_id == self.id]
+
 
     @amenities.setter
     def amenities(self, obj):
